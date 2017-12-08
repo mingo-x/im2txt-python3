@@ -41,7 +41,7 @@ SCRATCH_DIR="${OUTPUT_DIR}/raw-data"
 mkdir -p "${OUTPUT_DIR}"
 mkdir -p "${SCRATCH_DIR}"
 CURRENT_DIR=$(pwd)
-WORK_DIR="$0.runfiles/im2txt/im2txt"
+WORK_DIR="$0.runfiles/im2txt-python3/im2txt"
 
 # Helper function to download and unpack a .zip file.
 function download_and_unzip() {
