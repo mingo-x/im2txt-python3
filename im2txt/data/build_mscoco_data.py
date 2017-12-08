@@ -99,17 +99,17 @@ import nltk.tokenize
 import numpy as np
 import tensorflow as tf
 
-tf.flags.DEFINE_string("train_image_dir", "/tmp/train2014/",
+tf.flags.DEFINE_string("train_image_dir", "./data/raw-data/train2014-first2000/",
                        "Training image directory.")
-tf.flags.DEFINE_string("val_image_dir", "/tmp/val2014",
+tf.flags.DEFINE_string("val_image_dir", "./data/raw-data/val2014-first1000/",
                        "Validation image directory.")
 
-tf.flags.DEFINE_string("train_captions_file", "/tmp/captions_train2014.json",
+tf.flags.DEFINE_string("train_captions_file", "./data/raw-data/annotations/captions_train2014.json",
                        "Training captions JSON file.")
-tf.flags.DEFINE_string("val_captions_file", "/tmp/captions_val2014.json",
+tf.flags.DEFINE_string("val_captions_file", "./data/raw-data/annotations/captions_val2014.json",
                        "Validation captions JSON file.")
 
-tf.flags.DEFINE_string("output_dir", "/tmp/", "Output data directory.")
+tf.flags.DEFINE_string("output_dir", "./data/", "Output data directory.")
 
 tf.flags.DEFINE_integer("train_shards", 256,
                         "Number of shards in training TFRecord files.")
