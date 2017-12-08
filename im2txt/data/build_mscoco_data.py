@@ -92,6 +92,7 @@ import os.path
 import random
 import sys
 import threading
+import pickle
 
 
 
@@ -397,7 +398,7 @@ def _process_caption(caption):
   return tokenized_caption
 
 
-def _load_and_process_metadata(captions_file, image_dir):
+def _load_and_process_metadata(captions_file, image_dir, name_set):
   """Loads image metadata from a JSON file and processes the captions.
 
   Args:
@@ -411,7 +412,7 @@ def _load_and_process_metadata(captions_file, image_dir):
     caption_data = json.load(f)
 
   # Extract the filenames.
-  id_to_filename = [(x["id"], x["file_name"]) for x in caption_data["images"]]
+  id_to_filename = [(x["id"], x["file_name"]) for x in caption_data["images"] if x["file_name"] in name_set]
 
   # Extract the captions. Each image_id is associated with multiple captions.
   id_to_captions = {}
@@ -421,10 +422,11 @@ def _load_and_process_metadata(captions_file, image_dir):
     id_to_captions.setdefault(image_id, [])
     id_to_captions[image_id].append(caption)
 
-  assert len(id_to_filename) == len(id_to_captions)
-  assert set([x[0] for x in id_to_filename]) == set(id_to_captions.keys())
+  #assert len(id_to_filename) == len(id_to_captions)
+  #assert set([x[0] for x in id_to_filename]) == set(id_to_captions.keys())
   print("Loaded caption metadata for %d images from %s" %
         (len(id_to_filename), captions_file))
+  print(len(id_to_captions))
 
   # Process the captions and combine the data into a list of ImageMetadata.
   print("Processing captions.")
@@ -456,11 +458,12 @@ def main(unused_argv):
   if not tf.gfile.IsDirectory(FLAGS.output_dir):
     tf.gfile.MakeDirs(FLAGS.output_dir)
 
+  name_set = pickle.load(open("./data/pic_name_set.p","rb"))
   # Load image metadata from caption files.
   mscoco_train_dataset = _load_and_process_metadata(FLAGS.train_captions_file,
-                                                    FLAGS.train_image_dir)
+                                                    FLAGS.train_image_dir,name_set)
   mscoco_val_dataset = _load_and_process_metadata(FLAGS.val_captions_file,
-                                                  FLAGS.val_image_dir)
+                                                  FLAGS.val_image_dir,name_set)
 
   # Redistribute the MSCOCO data as follows:
   #   train_dataset = 100% of mscoco_train_dataset + 85% of mscoco_val_dataset.
