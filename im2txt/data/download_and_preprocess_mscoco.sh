@@ -63,11 +63,11 @@ cd ${SCRATCH_DIR}
 # Download the images.
 BASE_IMAGE_URL="http://msvocds.blob.core.windows.net/coco2014"
 
-TRAIN_IMAGE_FILE="train2014.zip"
+TRAIN_IMAGE_FILE="train2014-first2000.zip"
 download_and_unzip ${BASE_IMAGE_URL} ${TRAIN_IMAGE_FILE}
 TRAIN_IMAGE_DIR="${SCRATCH_DIR}/train2014"
 
-VAL_IMAGE_FILE="val2014.zip"
+VAL_IMAGE_FILE="val2014-first1000.zip"
 download_and_unzip ${BASE_IMAGE_URL} ${VAL_IMAGE_FILE}
 VAL_IMAGE_DIR="${SCRATCH_DIR}/val2014"
 
